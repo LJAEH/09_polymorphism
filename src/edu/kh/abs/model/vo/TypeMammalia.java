@@ -1,0 +1,9 @@
+package edu.kh.abs.model.vo;
+
+public abstract class TypeMammalia extends Animal{
+	
+	// 포유류 특징
+	public abstract void breastFeed();
+	
+
+}

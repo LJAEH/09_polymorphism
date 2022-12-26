@@ -9,7 +9,7 @@ public class Run {
 		
 		PolyService ps = new PolyService();
 		
-		ps.ex3();
+		ps.ex5();
 		
 	}
 

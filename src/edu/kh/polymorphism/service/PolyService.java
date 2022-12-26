@@ -149,6 +149,7 @@ public class PolyService {
 			System.out.println("바퀴 개수 : " + temp.getWheel());
 			System.out.println();
 		}
+		
 		public Car createCar(int num) {
 			
 			Car result = null;
@@ -184,12 +185,89 @@ public class PolyService {
 		// 효율적인 다운캐스팅 방법
 		// - 얕은 복사(주소 복사)를 이용하는 방법
 		Tesla t1 = (Tesla)c1;
-		
+				// (Tesla)를 빼면 c1 Car타입
+		// 자식참조변수롤 부모객체참조? (반대는업캐스팅으로가능)
+		// c1이 참조하는게 Tesla라는걸 알기때문에 Tesla로 강제형변환 가능
+		// Tesla = Tesla 같은 자료형 연산 가능하니 같은 주소를 복사시켜버림(얕은 복사)
 		System.out.println(t1.getBatteryCapacity());
 		
 		
 	}
 	
+	// 다운캐스팅 주의사항!
+	public void ex4() {
+		// 다운캐스팅중 오류사항이 있을 수 있음, 상황 제시
+		
+		Car c1 = new Tesla();
+		
+		if(c1 instanceof Spark){
+			Spark s1 = (Spark)c1; // 맞을 때 다운 캐스팅
+			System.out.println("성공");
+		} else {
+			System.out.println("실패");
+			
+		}
+		
+		
+	}
+	
+	public void ex5() {
+		// 바인딩(Binding)
+		// -실제 실행할 메소드 코드와 호출하는 코드를 연결 시키는 것
+		
+		Car c1 = new Car("경유엔진","경유",4);
+		
+		System.out.println(c1.getEngine());
+		// Car 객체에 있는 getEngine() 메소드를 호출 == 바인딩
+		// String edu.kh.poly.model.vo.Car.getEngine()
+		
+		// 프로그램 "실행 전"
+		// - 컴파일런느 getEngine() 메소드가 Car에 있는 걸로 인식해서
+		// c1.getEngine() 호출 코드와 String edu.kh.poly.model.vo.Car.getEngine()
+		// 메소드 코드를 연결
+		// ==> [정적 바인딩]
+		
+		System.out.println(c1.toString());
+		//String edu.kh.poly.model.vo.Car.toString()
+		// Car 참조변수 c1을 이용해서
+		// Car 격체에 있는 오버라이딩 된 toString() 메소드를 호출
+		
+		// 다형성 적용 시 바인딩
+		
+		Car c2 = new Spark("경차엔진", "휘발유",4,0.5);
+		// 업캐스팅 적용 => 부모 부분만 참조 가능한 상태
+		
+		System.out.println(c2.toString());
+		// String edu.kh.poly.model.vo.Car.toString()
+		// 참조변수 c2가 Car타입이므로
+		// toString()도 Car의 toString()을 호출 = 정적바인딩
+		
+		// 실행해보면 자식(Spark)의 toString()이 호출되는것을 확인!
+		// => 컴파일시에는 부모(Car)와 바인딩 == [정적 바인딩]
+		// => 실행 시에는 자식(Spark)의 오버라이딩된 메소드와 바인딩 == [동적 바인딩]
+		
+		// 동적 바인딩 활용 방법
+		
+		Car[] arr = {
+				new Car("경유엔진","경유",12),
+				new Tesla("전기모터","전기",4,10000),
+				new Spark("경차엔진","무연",4,0.5)
+		};
+		
+		// arr 배열요소가 참조하는 모든 객체의 필드값을 출력
+		for(int i=0; i<arr.length; i++) {
+			System.out.println(i + "번째요소: " + arr[i].toString());
+			// 실행전 : String edu.kh.poly.model.vo.Car.toString() - 정적바인딩
+			// 실행후 : 각 객체의 오버라이딩 된 toString()이 호출됨 - 동적 바인딩
+			
+			
+		}
+		
+		// 동적 바인딩 장점
+		// - 업캐스팅 상태의 참조변수를
+		//   별도의 다운 캐스팅없이
+		//   자식의 오버라이딩된 메소드를 수행할 수 있다.
+	}
 	
 
 
